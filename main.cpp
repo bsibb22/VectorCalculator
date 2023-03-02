@@ -158,6 +158,7 @@ int main() {
                 vectorBank.at(index1).Print();
                 cout << " · ";
                 vectorBank.at(index2).Print();
+                cout << " = " << dotResult << endl;
             }
         }
         else if (choice == "keep") {
