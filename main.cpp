@@ -15,12 +15,14 @@
  * help: prints a list of available commands
  */
 
-#include "Vector3.h"
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <fstream>
 
 using namespace std;
+
+#include "Vector3.h"
 
 void PrintCommands() {
     cout << "I can perform the following commands:\n" << setw(12) << left << "store:";
@@ -44,6 +46,7 @@ void PrintMenu() {
 int main() {
     string choice;
     vector<Vector3> vectorBank;
+    Vector3 prevVector;
     PrintMenu();
 
     cout << endl << endl;
@@ -63,16 +66,66 @@ int main() {
             vecToStore.Print();
             cout << "!" << endl;
 
+            prevVector = vecToStore;
             vectorBank.push_back(vecToStore);
         }
         else if (choice == "list") {
             cout << setw(15) << left << "Index" << "|" << setw(15) << " Vector" << endl;
             cout << setw(30) << setfill('-') << "" << endl << setfill(' ');
             for (unsigned int i = 0; i < vectorBank.size(); i++) {
-                cout << setw(15) << left << (i + 1) << "| ";
+                cout << setw(15) << left << (i) << "| ";
                 vectorBank.at(i).Print();
                 cout << endl;
             }
+        }
+        else if (choice == "clear") {
+            vectorBank.clear();
+            cout << "All stored vectors have been erased. Rest in peace. (*꒦ິ⌓꒦ີ)" << endl;
+        }
+        else if (choice == "add") {
+            if (vectorBank.size() < 2) {
+                cout << "Error: there aren't enough stored Vectors to perform this operation. Try storing " << (2 - vectorBank.size()) << " more!";
+            }
+            else {
+                int index1 = -1;
+                cout << "Type the index of the first vector to add: ";
+                cin >> index1;
+                if (index1 >= vectorBank.size() || index1 < 0) {
+                    cout << "Error: that index is out of bounds (minimum index: 0, maximum index: "
+                    << vectorBank.size() - 1 << ")" << endl;
+                }
+                else {
+                    int index2 = -1;
+                    cout << "Type the index of the second vector to add: ";
+                    cin >> index2;
+                    if (index2 >= vectorBank.size() || index2 < 0) {
+                        cout << "Error: that index is out of bounds (minimum index: 0, maximum index: "
+                             << vectorBank.size() - 1 << ")" << endl;
+                    }
+                    else {
+                        Vector3 addition = vectorBank.at(index1) + vectorBank.at(index2);
+                        cout << "The addition of ";
+                        vectorBank.at(index1).Print();
+                        cout << " and ";
+                        vectorBank.at(index2).Print();
+                        cout << " is: ";
+                        addition.Print();
+                        cout << "." << endl;
+                        prevVector = addition;
+                    }
+                }
+            }
+        }
+        else if (choice == "keep") {
+            cout << "Stored the last vector ";
+            prevVector.Print();
+            cout << "." << endl;
+            vectorBank.push_back(prevVector);
+        }
+        else if (choice == "help") {
+            cout << "We can all use some help now and then! ";
+            PrintCommands();
+            cout << endl;
         }
         else if (choice == "amogus") {
             cout << "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀ \n"

@@ -19,3 +19,19 @@ Vector3::Vector3(double x, double y, double z) {
 void Vector3::Print() {
     cout << "<" << x << ", " << y << ", " << z << ">";
 }
+
+double Vector3::dot(Vector3 &rhs) {
+    return x * rhs.x + y * rhs.y + z * rhs.z;
+}
+
+Vector3 Vector3::operator+(Vector3 &rhs) {
+    return Vector3(x + rhs.x, y + rhs.y, z + rhs.z);
+}
+
+Vector3 Vector3::operator-(Vector3 &rhs) {
+    return Vector3(x - rhs.x, y - rhs.y, z - rhs.z);
+}
+
+Vector3 Vector3::cross(Vector3 &rhs) {
+    return Vector3(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
+}
