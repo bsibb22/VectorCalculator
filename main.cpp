@@ -18,7 +18,6 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
-#include <fstream>
 
 using namespace std;
 
@@ -41,6 +40,27 @@ void PrintCommands() {
 void PrintMenu() {
     cout << "Howdy! I'm the KX-11 Vector Calculator! <(￣︶￣)>\n\n";
     PrintCommands();
+}
+
+void GetIndex(int& storeIn, vector<Vector3>& vectors) {
+    int tempIndex = -1;
+    while (storeIn == -1) {
+        cin >> tempIndex;
+        if (tempIndex > vectors.size() - 1 or tempIndex < 0) {
+            cout << "Error: that index is out of bounds (minimum index: 0, maximum index: " << vectors.size() - 1 << ")" << endl;
+        }
+        else {
+            storeIn = tempIndex;
+        }
+    }
+}
+
+void PrintOperation(Vector3& lhs, char operation, Vector3& rhs) {
+    cout << "The result of ";
+    lhs.Print();
+    cout << " " << operation << " ";
+    rhs.Print();
+    cout << " is: ";
 }
 
 int main() {
@@ -84,36 +104,60 @@ int main() {
         }
         else if (choice == "add") {
             if (vectorBank.size() < 2) {
-                cout << "Error: there aren't enough stored Vectors to perform this operation. Try storing " << (2 - vectorBank.size()) << " more!";
+                cout << "Error: there aren't enough stored Vectors to perform this operation. Try storing " << (2 - vectorBank.size()) << " more!" << endl;
             }
             else {
                 int index1 = -1;
+                int index2 = -1;
                 cout << "Type the index of the first vector to add: ";
-                cin >> index1;
-                if (index1 >= vectorBank.size() || index1 < 0) {
-                    cout << "Error: that index is out of bounds (minimum index: 0, maximum index: "
-                    << vectorBank.size() - 1 << ")" << endl;
-                }
-                else {
-                    int index2 = -1;
-                    cout << "Type the index of the second vector to add: ";
-                    cin >> index2;
-                    if (index2 >= vectorBank.size() || index2 < 0) {
-                        cout << "Error: that index is out of bounds (minimum index: 0, maximum index: "
-                             << vectorBank.size() - 1 << ")" << endl;
-                    }
-                    else {
-                        Vector3 addition = vectorBank.at(index1) + vectorBank.at(index2);
-                        cout << "The addition of ";
-                        vectorBank.at(index1).Print();
-                        cout << " and ";
-                        vectorBank.at(index2).Print();
-                        cout << " is: ";
-                        addition.Print();
-                        cout << "." << endl;
-                        prevVector = addition;
-                    }
-                }
+                GetIndex(index1, vectorBank);
+                cout << "Type the index of the second vector to add: ";
+                GetIndex(index2, vectorBank);
+                Vector3 addition = vectorBank.at(index1) + vectorBank.at(index2);
+                cout << "The result of ";
+                vectorBank.at(index1).Print();
+                cout << " + ";
+                vectorBank.at(index2).Print();
+                cout << " is: ";
+                addition.Print();
+                cout << "." << endl;
+                prevVector = addition;
+            }
+        }
+        else if (choice == "sub") {
+            if (vectorBank.size() < 2) {
+                cout << "Error: there aren't enough stored Vectors to perform this operation. Try storing " << (2 - vectorBank.size()) << " more!" << endl;
+            }
+            else {
+                int index1 = -1;
+                int index2 = -1;
+                cout << "Type the index of the vector from which you will subtract: ";
+                GetIndex(index1, vectorBank);
+                cout << "Type the index of the vector you will be subtracting by: ";
+                GetIndex(index2, vectorBank);
+                Vector3 subtraction = vectorBank.at(index1) - vectorBank.at(index2);
+                PrintOperation(vectorBank.at(index1), '-', vectorBank.at(index2));
+                subtraction.Print();
+                cout << endl;
+                prevVector = subtraction;
+            }
+        }
+        else if (choice == "dot") {
+            if (vectorBank.size() < 2) {
+                cout << "Error: there aren't enough stored Vectors to perform this operation. Try storing " << (2 - vectorBank.size()) << " more!" << endl;
+            }
+            else {
+                int index1 = -1;
+                int index2 = -1;
+                cout << "Enter the index of the first operand vector: ";
+                GetIndex(index1, vectorBank);
+                cout << "Enter the index of the vector to dot with: ";
+                GetIndex(index2, vectorBank);
+                double dotResult = vectorBank.at(index1).dot(vectorBank.at(index2));
+                cout << "The result of ";
+                vectorBank.at(index1).Print();
+                cout << " · ";
+                vectorBank.at(index2).Print();
             }
         }
         else if (choice == "keep") {
@@ -155,7 +199,6 @@ int main() {
         cout << "What would you like me to do now?" << endl;
         cin >> choice;
     }
-
     cout << endl;
     cout << "Goodbye! Thank you for using the KX-11 Vector Calculator. ٩(◕‿◕｡)۶";
 

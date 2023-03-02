@@ -6,6 +6,7 @@
 #define VECTORCALCULATOR_VECTOR3_H
 
 #include <iostream>
+#include <ostream>
 
 using namespace std;
 
