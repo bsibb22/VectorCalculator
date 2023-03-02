@@ -5,11 +5,19 @@
 #ifndef VECTORCALCULATOR_VECTOR3_H
 #define VECTORCALCULATOR_VECTOR3_H
 
+using namespace std;
+#include <iostream>
 
 class Vector3 {
     double x;
     double y;
     double z;
+
+public:
+    Vector3();
+    Vector3(double x, double y, double z);
+
+    void Print();
 };
 
 

@@ -23,7 +23,7 @@
 using namespace std;
 
 void PrintCommands() {
-    cout << "You can use the following commands:\n" << setw(12) << left << "store:";
+    cout << "I can perform the following commands:\n" << setw(12) << left << "store:";
     cout << "store a Vector3 for future use\n" << setw(12) << left << "list: ";
     cout << "list all currently stored vectors and their index\n" << setw(12) << left << "clear:";
     cout << "clear the list of stored vectors\n" << setw(12) << left << "add:";
@@ -36,9 +36,8 @@ void PrintCommands() {
     cout << "print command list\n" << setw(12) << left << "quit:";
     cout << "quit the calculator";
 }
-
 void PrintMenu() {
-    cout << "Welcome to the KX-11 Vector Calculator!\n\n";
+    cout << "Howdy! I'm the KX-11 Vector Calculator! <(￣︶￣)>\n\n";
     PrintCommands();
 }
 
@@ -48,9 +47,59 @@ int main() {
     PrintMenu();
 
     cout << endl << endl;
-    cout << "What would you like to do to start? (Tip: you will probably want to try \"store\"-ing a vector first!)" << endl;
+    cout << "What would you like me to do to start? (Tip: you will probably want to try \"store\"-ing a vector first!)" << endl;
     cin >> choice;
     while (choice != "quit") {
+        if (choice == "store") {
+            double vecX, vecY, vecZ;
+            cout << "Storing vector with coordinates:\nx: ";
+            cin >> vecX;
+            cout << "y: ";
+            cin >> vecY;
+            cout << "z: ";
+            cin >> vecZ;
+            Vector3 vecToStore(vecX, vecY, vecZ);
+            cout << "I just stored the vector ";
+            vecToStore.Print();
+            cout << "!" << endl;
+
+            vectorBank.push_back(vecToStore);
+        }
+        else if (choice == "list") {
+            cout << setw(15) << left << "Index" << "|" << setw(15) << " Vector" << endl;
+            cout << setw(30) << setfill('-') << "" << endl << setfill(' ');
+            for (unsigned int i = 0; i < vectorBank.size(); i++) {
+                cout << setw(15) << left << (i + 1) << "| ";
+                vectorBank.at(i).Print();
+                cout << endl;
+            }
+        }
+        else if (choice == "amogus") {
+            cout << "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀ \n"
+                    "⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀⠀⠀⠀⠀⠀ \n"
+                    "⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⠋⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠈⢻⣿⣿⡄⠀⠀⠀⠀ \n"
+                    "⠀⠀⠀⠀⠀⠀⠀⣸⣿⡏⠀⠀⠀⣠⣶⣾⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣄⠀⠀⠀ \n"
+                    "⠀⠀⠀⠀⠀⠀⠀⣿⣿⠁⠀⠀⢰⣿⣿⣯⠁⠀⠀⠀⠀⠀⠀⠀⠈⠙⢿⣷⡄⠀ \n"
+                    "⠀⠀⣀⣤⣴⣶⣶⣿⡟⠀⠀⠀⢸⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣷⠀ \n"
+                    "⠀⢰⣿⡟⠋⠉⣹⣿⡇⠀⠀⠀⠘⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣶⣶⣶⣿⣿⣿⠀ \n"
+                    "⠀⢸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀ \n"
+                    "⠀⣸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇⠀⠀ \n"
+                    "⠀⣿⣿⠁⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣧⠀⠀ \n"
+                    "⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀ \n"
+                    "⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀ \n"
+                    "⠀⢿⣿⡆⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡇⠀⠀ \n"
+                    "⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠃⠀⠀ \n"
+                    "⠀⠀⠛⢿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⣰⣿⣿⣷⣶⣶⣶⣶⠶⠀⢠⣿⣿⠀⠀⠀ \n"
+                    "⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⣽⣿⡏⠁⠀⠀⢸⣿⡇⠀⠀⠀ \n"
+                    "⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⢹⣿⡆⠀⠀⠀⣸⣿⠇⠀⠀⠀ \n"
+                    "⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏⠀⠀⠀⠀ \n"
+                    "⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" << endl;
+            cout << "Why would you do this (┳Д┳)" << endl;
+        }
+        else {
+            cout << "Uh-oh! I don't know how to handle that command. (ಥ﹏ಥ)" << endl;
+        }
+        cout << "What would you like me to do now?" << endl;
         cin >> choice;
     }
 
