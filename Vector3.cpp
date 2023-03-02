@@ -3,6 +3,7 @@
 //
 
 #include "Vector3.h"
+#include <cmath>
 
 Vector3::Vector3() {
     this->x = 0.0;
@@ -34,4 +35,13 @@ Vector3 Vector3::operator-(Vector3 &rhs) {
 
 Vector3 Vector3::cross(Vector3 &rhs) {
     return Vector3(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
+}
+
+double Vector3::mag() {
+    return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+}
+
+Vector3 Vector3::getUnit() {
+    double m = mag();
+    return Vector3(x / m, y / m, z / m);
 }

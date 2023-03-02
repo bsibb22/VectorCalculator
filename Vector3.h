@@ -24,6 +24,10 @@ public:
     Vector3 operator-(Vector3& rhs);
     Vector3 cross(Vector3& rhs);
     double dot(Vector3& rhs);
+
+    double mag();
+
+    Vector3 getUnit();
 };
 
 

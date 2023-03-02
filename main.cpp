@@ -7,10 +7,13 @@
  * store: store a Vector3
  * list: list all the stored Vectors
  * clear: clear the list of stored Vectors
- * add u v: find the addition of vectors u and v
- * sub u v: find the subtraction of v from u
- * dot u v: find the dot product of u and v
- * cross u v: return the cross product of u and v (u x v)
+ * add: find the addition of 2 vectors
+ * sub: find the subtraction of 2 vectors
+ * dot: find the dot product of 2 vectors
+ * cross: find the cross product of 2 vectors
+ * unit: find the normalized version of a vector
+ *
+ * print: print the vector at a given index
  * keep: store the last returned vector (if it is a vector), otherwise does nothing
  * help: prints a list of available commands
  */
@@ -34,27 +37,27 @@ void PrintCommands() {
     cout << "get the cross product of two vectors\n" << setw(12) << left << "keep:";
     cout << "store the previously returned vector\n" << setw(12) << left << "unit:";
     cout << "get the unit vector in the direction of a stored vector\n" << setw(12) << left << "help:";
-    cout << "print command list\n" << setw(12) << left << "quit:";
+    cout << "print command list\n" << setw(12) << left << "print:";
+    cout << "print the vector at a given index\n" << setw(12) << left << "quit:";
     cout << "quit the calculator";
 }
 void PrintMenu() {
     cout << "Howdy! I'm the KX-11 Vector Calculator! <(￣︶￣)>\n\n";
     PrintCommands();
 }
-
 void GetIndex(int& storeIn, vector<Vector3>& vectors) {
     int tempIndex = -1;
     while (storeIn == -1) {
         cin >> tempIndex;
         if (tempIndex > vectors.size() - 1 or tempIndex < 0) {
             cout << "Error: that index is out of bounds (minimum index: 0, maximum index: " << vectors.size() - 1 << ")" << endl;
+            cout << "Type a new index to try: ";
         }
         else {
             storeIn = tempIndex;
         }
     }
 }
-
 void PrintOperation(Vector3& lhs, char operation, Vector3& rhs) {
     cout << "The result of ";
     lhs.Print();
@@ -114,11 +117,7 @@ int main() {
                 cout << "Type the index of the second vector to add: ";
                 GetIndex(index2, vectorBank);
                 Vector3 addition = vectorBank.at(index1) + vectorBank.at(index2);
-                cout << "The result of ";
-                vectorBank.at(index1).Print();
-                cout << " + ";
-                vectorBank.at(index2).Print();
-                cout << " is: ";
+                PrintOperation(vectorBank.at(index1), '+', vectorBank.at(index2));
                 addition.Print();
                 cout << "." << endl;
                 prevVector = addition;
@@ -154,18 +153,48 @@ int main() {
                 cout << "Enter the index of the vector to dot with: ";
                 GetIndex(index2, vectorBank);
                 double dotResult = vectorBank.at(index1).dot(vectorBank.at(index2));
-                cout << "The result of ";
-                vectorBank.at(index1).Print();
-                cout << " · ";
-                vectorBank.at(index2).Print();
-                cout << " = " << dotResult << endl;
+                PrintOperation(vectorBank.at(index1), '*', vectorBank.at(index2));
+                cout << dotResult << endl;
             }
+        }
+        else if (choice == "cross") {
+            int index1 = -1;
+            int index2 = -1;
+            cout << "Enter the index of the first operand vector: ";
+            GetIndex(index1, vectorBank);
+            cout << "Enter the index of the vector to cross with: ";
+            GetIndex(index2, vectorBank);
+            Vector3 crossProd = vectorBank.at(index1).cross(vectorBank.at(index2));
+            PrintOperation(vectorBank.at(index1), 'x', vectorBank.at(index2));
+            crossProd.Print();
+            cout << endl;
+            prevVector = crossProd;
+        }
+        else if (choice == "unit") {
+            int index = -1;
+            cout << "Enter the index of the vector whose unit version you want to find: ";
+            GetIndex(index, vectorBank);
+            Vector3 normalized = vectorBank.at(index).getUnit();
+            cout << "The unit vector in the direction of ";
+            vectorBank.at(index).Print();
+            cout << " is ";
+            normalized.Print();
+            cout << endl;
+            prevVector = normalized;
         }
         else if (choice == "keep") {
             cout << "Stored the last vector ";
             prevVector.Print();
             cout << "." << endl;
             vectorBank.push_back(prevVector);
+        }
+        else if (choice == "print") {
+            int index = -1;
+            cout << "Enter an index to locate: ";
+            GetIndex(index, vectorBank);
+            cout << "The vector located at index " << index << " is ";
+            vectorBank.at(index).Print();
+            cout << endl;
         }
         else if (choice == "help") {
             cout << "We can all use some help now and then! ";
@@ -197,6 +226,7 @@ int main() {
         else {
             cout << "Uh-oh! I don't know how to handle that command. (ಥ﹏ಥ)" << endl;
         }
+
         cout << "What would you like me to do now?" << endl;
         cin >> choice;
     }
