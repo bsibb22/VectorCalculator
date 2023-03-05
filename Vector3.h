@@ -22,6 +22,8 @@ public:
     void Print();
     Vector3 operator+(Vector3& rhs);
     Vector3 operator-(Vector3& rhs);
+    Vector3 operator*(double factor);
+
     Vector3 cross(Vector3& rhs);
     double dot(Vector3& rhs);
 

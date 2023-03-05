@@ -12,7 +12,7 @@
  * dot: find the dot product of 2 vectors
  * cross: find the cross product of 2 vectors
  * unit: find the normalized version of a vector
- *
+ * anti: find the vector in the opposite direction
  * print: print the vector at a given index
  * keep: store the last returned vector (if it is a vector), otherwise does nothing
  * help: prints a list of available commands
@@ -38,7 +38,10 @@ void PrintCommands() {
     cout << "store the previously returned vector\n" << setw(12) << left << "unit:";
     cout << "get the unit vector in the direction of a stored vector\n" << setw(12) << left << "help:";
     cout << "print command list\n" << setw(12) << left << "print:";
-    cout << "print the vector at a given index\n" << setw(12) << left << "quit:";
+    cout << "print the vector at a given index\n";
+    cout << setw(12) << left << "anti:";
+    cout << "get the negative of a stored vector\n";
+    cout << setw(12) << left << "quit:";
     cout << "quit the calculator";
 }
 void PrintMenu() {
@@ -222,6 +225,18 @@ int main() {
                     "⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏⠀⠀⠀⠀ \n"
                     "⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" << endl;
             cout << "Why would you do this (┳Д┳)" << endl;
+        }
+        else if (choice == "anti") {
+            int index = -1;
+            cout << "Enter the index of the vector whose anti-parallel vector you want to find: ";
+            GetIndex(index, vectorBank);
+            Vector3 anti = vectorBank.at(index) * -1;
+            cout << "The anti-parallel vector to ";
+            vectorBank.at(index).Print();
+            cout << " is ";
+            anti.Print();
+            cout << endl;
+            prevVector = anti;
         }
         else {
             cout << "Uh-oh! I don't know how to handle that command. (ಥ﹏ಥ)" << endl;

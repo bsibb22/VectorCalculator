@@ -33,6 +33,10 @@ Vector3 Vector3::operator-(Vector3 &rhs) {
     return Vector3(x - rhs.x, y - rhs.y, z - rhs.z);
 }
 
+Vector3 Vector3::operator*(double factor) {
+    return Vector3(x * factor, y * factor, z * factor);
+}
+
 Vector3 Vector3::cross(Vector3 &rhs) {
     return Vector3(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
 }
